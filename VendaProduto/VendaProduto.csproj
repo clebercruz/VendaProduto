@@ -67,6 +67,7 @@
     <Compile Include="Activities\ProdutoActivity.cs" />
     <Compile Include="Activities\ProdutoPedidoActivity.cs" />
     <Compile Include="Activities\SplashScreen.cs" />
+    <Compile Include="Activities\UpdateProdutoActivity.cs" />
     <Compile Include="Adapters\AdaptadorPedidos.cs" />
     <Compile Include="Adapters\AdaptadorProdutosPedido.cs" />
     <Compile Include="Adapters\AdaptadorProdutos.cs" />
