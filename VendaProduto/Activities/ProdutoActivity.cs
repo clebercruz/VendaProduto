@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
+using Newtonsoft.Json;
 using VendaProduto.Adapters;
 using VendaProduto.Classes;
 using ToolbarV7 = Android.Support.V7.Widget.Toolbar;
@@ -52,6 +53,27 @@ namespace VendaProduto.Activities
             lstProdutos.Adapter = adp;
 
             lstProdutos.ItemLongClick += LstProdutos_ItemLongClick;
+            lstProdutos.ItemClick += LstProdutos_ItemClick;
+        }
+
+        private void LstProdutos_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            //Abrir a activity que vai atualizar os dados do produto tocado
+            Intent telaUpdate = new Intent(this, typeof(UpdateProdutoActivity));
+
+            if (produtosFiltro != null)
+            {
+                telaUpdate.PutExtra("att_produto", JsonConvert.SerializeObject(produtosFiltro));
+                telaUpdate.PutExtra("att_produto", JsonConvert.SerializeObject(produtosFiltro[e.Position]));
+
+            }
+            else
+            {
+                telaUpdate.PutExtra("att_produto", JsonConvert.SerializeObject(produtosFiltro));
+                telaUpdate.PutExtra("att_produto", JsonConvert.SerializeObject(produtos[e.Position]));
+            }
+
+            StartActivityForResult(telaUpdate, 13);
         }
 
         private void LstProdutos_ItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)
@@ -80,6 +102,22 @@ namespace VendaProduto.Activities
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.toolbar_produto, menu);
+
+            //Cria e configura o SearchView
+            IMenuItem item = menu.FindItem(Resource.Id.tlbItem_pesquisarProduto);
+            View searchView = item.ActionView as Android.Support.V7.Widget.SearchView;
+            Android.Support.V7.Widget.SearchView itemPesquisar;
+            itemPesquisar = searchView.JavaCast<Android.Support.V7.Widget.SearchView>();
+
+            //Método de evento que é executado a cada letra que digitamos ou apagamos
+            itemPesquisar.QueryTextChange += (s, e) =>
+            {
+                //Aqui iremos fazer a nossa busca!
+                List<Produto> filtroDeProdutos = Produto.BuscarProduto(e.NewText, infoProduto);
+                AdaptadorProdutos adaptador = new AdaptadorProdutos(this, filtroDeProdutos);
+                lstProdutos.Adapter = adaptador;
+            };
+
             return base.OnCreateOptionsMenu(menu);
         }
 

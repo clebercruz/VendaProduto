@@ -80,6 +80,21 @@ namespace VendaProduto.Classes
             return mensagem;
         }
 
+        public static List<Produto> BuscarProduto(string texto, List<Produto> produtos)
+        {
+            List<Produto> produtosFiltro = new List<Produto>();
+            try
+            {
+                produtosFiltro = (from p in produtos where p.NomeProduto.ToUpper().Contains(texto.ToUpper()) select p).ToList();
+                return produtosFiltro;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public List<Produto> BuscarTodosProdutos()
         {
             List<MySqlParameter> parametros = new List<MySqlParameter>();
