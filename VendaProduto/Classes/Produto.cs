@@ -64,6 +64,22 @@ namespace VendaProduto.Classes
             return id;
         }
 
+        public string DesativarProduto()
+        {
+            List<MySqlParameter> parametros = new List<MySqlParameter>();
+
+            parametros.Add(new MySqlParameter("ID", Id));
+
+            DataSet ds = base.Consultar("VP_SP_DesativarProduto", parametros);
+            string mensagem = "";
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                mensagem = ds.Tables[0].Rows[0][0].ToString();
+            }
+            return mensagem;
+        }
+
         public List<Produto> BuscarTodosProdutos()
         {
             List<MySqlParameter> parametros = new List<MySqlParameter>();
