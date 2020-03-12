@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
+using VendaProduto.Classes;
 
 namespace VendaProduto.Activities
 {
@@ -18,6 +19,9 @@ namespace VendaProduto.Activities
     {
         EditText edtNomeProduto, edtPrecoUnit, edtQtdEstoque;
         Button btnCadastrarProduto;
+
+        List<Produto> ListaProdutos = new List<Produto>();
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -36,7 +40,10 @@ namespace VendaProduto.Activities
 
         private void BtnCadastrarProduto_Click(object sender, EventArgs e)
         {
-            
+            Produto newproduto = new Produto(edtNomeProduto.Text, decimal.Parse(edtPrecoUnit.Text), int.Parse(edtQtdEstoque.Text), 1);
+            newproduto.Id = newproduto.IncluirProduto();
+            ListaProdutos.Add(newproduto);
+            Toast.MakeText(this, "Item Adicionado", ToastLength.Long).Show();
         }
     }
 }

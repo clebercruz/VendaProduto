@@ -46,6 +46,24 @@ namespace VendaProduto.Classes
             Ativo = ativo;
         }
 
+        public int IncluirProduto()
+        {
+            List<MySqlParameter> parametros = new List<MySqlParameter>();
+
+            parametros.Add(new MySqlParameter("NomeProduto", NomeProduto));
+            parametros.Add(new MySqlParameter("PrecoUnit", PrecoUnit));
+            parametros.Add(new MySqlParameter("QntEstocada", QtdEstocada));
+            parametros.Add(new MySqlParameter("Ativo", Ativo));
+
+            DataSet ds = base.Consultar("VP_SP_InsProduto", parametros);
+            int id = 0;
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                int.TryParse(ds.Tables[0].Rows[0][0].ToString(), out id);
+            }
+            return id;
+        }
+
         public List<Produto> BuscarTodosProdutos()
         {
             List<MySqlParameter> parametros = new List<MySqlParameter>();
