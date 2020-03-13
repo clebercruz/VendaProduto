@@ -49,6 +49,8 @@ namespace VendaProduto.Activities
                 upProduto.NomeProduto = edtNomeProdutoUp.Text;
                 upProduto.PrecoUnit = decimal.Parse(edtPrecoUnitUp.Text);
                 upProduto.QtdEstocada = int.Parse(edtQtdEstoqueUp.Text);
+                upProduto.Atualizar();
+                Toast.MakeText(this, "Atualizado!", ToastLength.Short).Show();
 
                 //Devolve o objeto e atualiza
                 Intent voltar = new Intent();

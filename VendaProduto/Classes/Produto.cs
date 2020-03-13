@@ -64,6 +64,19 @@ namespace VendaProduto.Classes
             return id;
         }
 
+        public void Atualizar()
+        {
+            List<MySqlParameter> parametros = new List<MySqlParameter>
+            {
+                new MySqlParameter("PNome", NomeProduto),
+                new MySqlParameter("PPreco", PrecoUnit),
+                new MySqlParameter("PEstoque", QtdEstocada),
+                new MySqlParameter("PId", Id),
+                
+            };
+            Executar("VP_SP_AtualizaProduto", parametros);
+        }
+
         public string DesativarProduto()
         {
             List<MySqlParameter> parametros = new List<MySqlParameter>();
